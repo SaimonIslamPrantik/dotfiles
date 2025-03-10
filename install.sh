@@ -1,14 +1,20 @@
 #!/bin/bash
 
-#yay installation
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-cd ..
-rm -rf yay
+# Ask user if they want to install yay
+read -p "Do you want to install yay? (y/n): " install_yay
+
+if [[ "$install_yay" == "y" || "$install_yay" == "Y" ]]; then
+    # yay installation
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
+    cd ..
+    rm -rf yay
+fi
 
 # List of packages to install
 packages=(
+    nano
     sddm
     curl
     wget
@@ -32,15 +38,12 @@ packages=(
     dunst
     swww
     bibata-cursor-theme
+    neofetch
     oh-my-posh
     feh
+    mpv
+    vlc
 )
-
-#enable services
-sudo systemctl enable sddm
-sudo systemctl start sddm
-sudo systemctl enable bluetooth
-sudo systemctl start bluetooth
 
 # Prompt user for confirmation
 echo "The following packages will be installed:"
@@ -70,28 +73,28 @@ rofi -dump-config > ~/.config/rofi/config.rasi
 sudo cp "$(dirname "$0")/hyprland.conf" ~/.config/hypr/
 
 #waybar configuration copy
-sudo cp -r "$(dirname "$0")/waybar/"* ~/.config/waybar/
+sudo cp -r waybar/* ~/.config/waybar/
 
 #rofi configuration copy
-sudo cp "$(dirname "$0")/rofi/"* ~/.config/rofi/
+sudo cp -r rofi/* ~/.config/rofi/
 
 #alacritty configuration copy
-sudo cp "$(dirname "$0")/alacritty.toml" ~/.config/alacritty/
+sudo cp alacritty.toml ~/.config/alacritty/
 
 #cursor theme copy
-sudo cp "$(dirname "$0")/.Xresources" ~/
+sudo cp .Xresources ~/
 
 #font installation
-sudo cp "$(dirname "$0")/fonts/"* ~/.fonts/
+sudo cp -r fonts/* ~/.fonts/
 
 #bashrc copy
-sudo cp "$(dirname "$0")/.bashrc" ~/
+sudo cp .bashrc ~/
 
 #copy poshthemes
-sudo cp -r "$(dirname "$0")/poshthemes/"* ~/.poshthemes/
+sudo cp -r poshthemes ~/
 
 #hyprlock configuration copy
-sudo cp "$(dirname "$0")/hyprlock/"* ~/.config/hypr/
+sudo cp hyprlock/* ~/.config/hypr/
 
 #sddm configuration copy
 git clone https://github.com/PROxZIMA/boo-sddm.git
@@ -99,6 +102,12 @@ cd boo-sddm
 sudo cp -r boo /usr/share/sddm/themes
 cd ..
 sudo cp "$(dirname "$0")/sddm.conf" /etc/
+
+#enable services
+sudo systemctl enable sddm
+sudo systemctl start sddm
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
 
 echo "All configurations have been copied successfully."
 echo "Restarting"
