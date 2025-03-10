@@ -64,7 +64,7 @@ else
 fi
 
 #essential dependencies
-sudo pacman -Syu sddm qt5-graphicaleffects qt5-svg qt5-quickcontrols2
+sudo pacman -Syu sddm qt5-graphicaleffects qt5-svg qt5-quickcontrols2 --y
 
 #mkdir
 mkdir  ~/.config/hypr/
@@ -98,7 +98,7 @@ sudo cp alacritty.toml ~/.config/alacritty/
 sudo cp .Xresources ~/
 
 #font installation
-sudo cp -r fonts/* ~/.fonts/
+sudo cp .fonts/* ~/.fonts/
 
 #bashrc copy
 sudo cp .bashrc ~/
@@ -121,7 +121,6 @@ sudo cp -r neofetch/* ~/.config/neofetch/
 
 #enable services
 sudo systemctl enable sddm
-sudo systemctl start sddm
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 
