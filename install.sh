@@ -55,13 +55,26 @@ read -p "Do you want to proceed with the installation? (y/n): " choice
 
 if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
     # Update package list and install packages using yay
-    yay -S --needed "${packages[@]}"
+    yay -S --needed --y "${packages[@]}"
     
     # Print completion message
     echo "All packages have been installed successfully."
 else
     echo "Installation aborted by the user."
 fi
+
+#essential dependencies
+sudo pacman -Syu sddm qt5-graphicaleffects qt5-svg qt5-quickcontrols2
+
+#mkdir
+mkdir  ~/.config/hypr/
+mkdir  ~/.config/waybar/
+mkdir  ~/.config/rofi/
+mkdir  ~/.config/alacritty/
+mkdir  ~/.config/neofetch/
+mkdir  ~/.config/hyprlock/
+mkdir ~/Downloads/
+mkdir ~/.fonts/
 
 #wallpaper download
 wget -O ~/Downloads/walp.jpg "https://raw.githubusercontent.com/TeenAgeTechBD/wallpapers/99657ef17ef47e189e8dcbcc0c3608f7fcc17718/wallpapers/walp.jpg"
@@ -70,7 +83,7 @@ wget -O ~/Downloads/walp.jpg "https://raw.githubusercontent.com/TeenAgeTechBD/wa
 rofi -dump-config > ~/.config/rofi/config.rasi
 
 #hyprland configuration copy
-sudo cp "$(dirname "$0")/hyprland.conf" ~/.config/hypr/
+sudo cp hyprland.conf ~/.config/hypr/
 
 #waybar configuration copy
 sudo cp -r waybar/* ~/.config/waybar/
@@ -101,7 +114,7 @@ git clone https://github.com/PROxZIMA/boo-sddm.git
 cd boo-sddm
 sudo cp -r boo /usr/share/sddm/themes
 cd ..
-sudo cp "$(dirname "$0")/sddm.conf" /etc/
+sudo cp sddm.conf /etc/
 
 #neofetch configuration copy
 sudo cp -r neofetch/* ~/.config/neofetch/
