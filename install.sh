@@ -103,6 +103,9 @@ sudo cp -r boo /usr/share/sddm/themes
 cd ..
 sudo cp "$(dirname "$0")/sddm.conf" /etc/
 
+#neofetch configuration copy
+sudo cp -r neofetch/* ~/.config/neofetch/
+
 #enable services
 sudo systemctl enable sddm
 sudo systemctl start sddm
